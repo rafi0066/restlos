@@ -35,7 +35,7 @@ ul{list-style:none;margin:0;padding:0;display:grid;gap:10px}
 .item .n{flex:1;min-width:0}.item b{display:block;overflow-wrap:anywhere}
 .item small{color:var(--mute)}
 .badge{font-weight:800;font-size:.9rem;white-space:nowrap}
-.warn .badge{color:var(--warn)}.bad .badge{color:var(--bad)}.item .badge{color:var(--ok)}
+.warn .badge{color:var(--warn)}.bad .badge{color:var(--bad)}.item:not(.warn):not(.bad) .badge{color:var(--ok)}
 .rec{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 16px}
 .rec h3{margin:0 0 4px;font-size:1.05rem}
 .rec p{margin:2px 0;color:var(--mute);font-size:.93rem}
@@ -57,13 +57,13 @@ button:disabled{opacity:.5;cursor:not-allowed}
 <h1>Restlos</h1>
 <p class="sub">Dein Kühlschrank-Helfer: Weniger wegwerfen, mehr kochen.</p>
 <div class="box plan"><div><b id="pn">Basis (kostenlos)</b><br><small id="pi" class="sub"></small></div><button id="pt">Zu Plus wechseln</button></div>
-<div class="ad" id="ad">Anzeige: Regionaler Bioladen (Beispiel) gibt 10 % Rabatt auf Gemüse mit dem Code RESTLOS10.</div>
+<div class="ad" id="ad">Anzeige: 10 % Rabatt auf frisches Gemüse bei deinem regionalen Partner-Bioladen mit dem Code RESTLOS10.</div>
 <div class="sum" id="sum"></div>
 
 <section class="box" aria-labelledby="addh">
 <div class="row">
 <label class="sr" for="nm">Lebensmittel</label>
-<input type="text" id="nm" placeholder="Lebensmittel, z. B. Joghurt" autocomplete="off">
+<input type="text" id="nm" placeholder="Was hast du eingekauft?" autocomplete="off">
 <label class="sr" for="dt">Haltbar bis</label>
 <input type="date" id="dt">
 <button class="main" id="add">Hinzufügen</button>
@@ -71,7 +71,7 @@ button:disabled{opacity:.5;cursor:not-allowed}
 <p class="sub" style="margin:8px 0 0;font-size:.9rem" id="hint">Das Datum wird automatisch aus der typischen Haltbarkeit geschätzt.</p>
 <details>
 <summary>Kassenzettel einfügen</summary>
-<textarea id="rc" placeholder="Zeilen vom Kassenzettel einfügen, z. B.&#10;Bio Eier 10er 2,99&#10;Tomaten 1,49&#10;Joghurt Natur 0,79"></textarea>
+<textarea id="rc" placeholder="Kassenzettel-Text hier einfügen, eine Zeile pro Produkt"></textarea>
 <button id="scan">Zettel auslesen</button>
 <span id="scanmsg" class="sub" style="margin-left:8px"></span>
 </details>
@@ -95,7 +95,7 @@ button:disabled{opacity:.5;cursor:not-allowed}
 <div class="box"><h3>Wert? Das Ertragsmodell</h3><p>Die Basis-App ist kostenlos und wird durch Werbung und Gutscheine von Supermärkten finanziert. Plus (2,99 € pro Monat) bietet unbegrenzte Scans, gemeinsame Einkaufslisten mit der Familie und werbefreie Nutzung.</p></div>
 </div>
 
-<p class="foot">Beispielapp mit Platzhalterdaten, ohne persönliche Daten. Gespeichert nur in diesem Browser. Die Foto-Texterkennung ist hier durch das Einfügen von Text ersetzt, der Tarifwechsel und das Teilen sind eine Demo.</p>
+
 </main>
 
 <script>
@@ -122,7 +122,7 @@ function has(name,key){return new RegExp("(^|[^a-zäöüß])"+key,"i").test(name
 function guess(name){var k=Object.keys(SHELF);for(var i=0;i<k.length;i++){if(has(name,k[i]))return SHELF[k[i]]}return null}
 function save(){try{localStorage.setItem(KEY,JSON.stringify(items))}catch(e){}}
 function load(){try{var r=localStorage.getItem(KEY);if(r){items=JSON.parse(r);return}}catch(e){}
-items=[{id:1,n:"Joghurt",d:plus(1)},{id:2,n:"Tomaten",d:plus(3)},{id:3,n:"Eier",d:plus(12)},{id:4,n:"Paprika",d:plus(-1)},{id:5,n:"Nudeln",d:plus(200)},{id:6,n:"Käse",d:plus(9)}]}
+items=[]}
 function addItem(n,d){items.push({id:Date.now()+Math.random(),n:n,d:d})}
 function label(x){return x<0?"seit "+(-x)+(x==-1?" Tag":" Tagen")+" abgelaufen":x===0?"heute fällig":x===1?"morgen":"in "+x+" Tagen"}
 function render(){
